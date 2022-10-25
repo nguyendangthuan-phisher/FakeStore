@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lophocphan/product_detail.dart';
 import 'package:lophocphan/productlist_page.dart';
 import 'package:lophocphan/provider/product_provider.dart';
 import 'package:provider/provider.dart';
@@ -12,7 +13,7 @@ void main() {
       ChangeNotifierProvider(create: (_)=> ProductProvider())
     ],
     child: MaterialApp(
-        home: ProductListPage()
+        home: ProductDetail( name: 'hehe',)
     ),
   ));
 }

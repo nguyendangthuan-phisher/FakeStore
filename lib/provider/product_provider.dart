@@ -6,11 +6,13 @@ import 'package:http/http.dart' as http;
 
 class ProductProvider extends ChangeNotifier{
   List<ProductModel> list = [];
+  List<String> listCategory = [];
   bool showGrid = true;
   void show(bool isGrid){
     showGrid = isGrid;
     notifyListeners();
   }
+
   void getList() async{
     String apiURL = "https://fakestoreapi.com/products";
     var client = http.Client();
@@ -21,5 +23,14 @@ class ProductProvider extends ChangeNotifier{
       return ProductModel.fromJson(e);
     }).toList();
     notifyListeners();
+  }
+
+  void getCateglory() async {
+    list.map((e) {
+      if (!listCategory.contains(e.category.toString())) {
+        listCategory.add(e.category.toString());
+      }
+    }).toList();
+
   }
 }
