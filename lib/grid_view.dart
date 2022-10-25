@@ -64,16 +64,6 @@ class GridViewPage extends StatelessWidget {
                     ),
                   ],
                 ),
-                // Container(
-                //   height: 25,
-                //   width: 80,
-                //   child: ElevatedButton(
-                //       style: ButtonStyle(
-                //           backgroundColor: MaterialStatePropertyAll<Color>(clr)
-                //       ),
-                //       onPressed: (){},
-                //       child: Text("Add")),
-                // ),
                 SizedBox(
                   height: 10,
                 )

@@ -57,6 +57,7 @@ class _ProductListPageState extends State<ProductListPage> {
     var pp = Provider.of<ProductProvider>(context);
     if (pp.list.isEmpty)
       pp.getList();
+    List<ProductProvider> cart;
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
@@ -74,7 +75,20 @@ class _ProductListPageState extends State<ProductListPage> {
                   style: styleButton,
                   child: Container(
                       height: 36,
-                      child: Icon(Icons.shopping_cart,color: clr,))
+                      child: Row(
+                        children: [
+                          Icon(Icons.shopping_cart,color: clr,),
+                          Column(
+                            children: [
+                              Text(" \(" + "0" + "\)",style: TextStyle(
+                                color: Colors.orange,
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold
+                              ),),
+                            ],
+                          )
+                        ],
+                      ))
               ),
             ],
           ),

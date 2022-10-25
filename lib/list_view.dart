@@ -11,6 +11,7 @@ class ListViewerPage extends StatelessWidget {
   ButtonStyle styleButton = ButtonStyle(
       backgroundColor: MaterialStateProperty.all<Color>(Colors.grey)
   );
+  Color clr = Colors.orange;
   Column rateDraw(double rate,num count){
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -74,7 +75,7 @@ class ListViewerPage extends StatelessWidget {
                           Row(
                             children: [
                               Container(
-                                width: 290,
+                                width: 260,
                                 height: 48,
                                 child: Padding(
                                   padding: const EdgeInsets.only(top: 10,bottom: 4),
@@ -84,25 +85,41 @@ class ListViewerPage extends StatelessWidget {
                                   ),),
                                 ),
                               ),
-                              rateDraw(e.rate??0.toDouble(),e.count??0)
+                              Padding(
+                                padding: const EdgeInsets.only(left: 20),
+                                child: rateDraw(e.rate??0.toDouble(),e.rateCount??0),
+                              )
                             ],
                           ),
                           Row(
                             children: [
                               Container(
-                                width: 290,
+                                width: 250,
                                 child: Text(e.description??"",maxLines: 2,style: TextStyle(
                                   fontSize: 12,
                                   color: Colors.grey
                                 ),),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 10),
-                                child: Text("\$ "+e.price.toString(),style: TextStyle(
-                                  color: Colors.red,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18,
-                                ),),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 10,right: 10),
+                                    child: Text( "\$ "+ (e.price.toString()),style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.red
+                                    ),),
+                                  ),
+                                  Container(
+                                    width: 50,
+                                    child: ElevatedButton(
+                                        style: ButtonStyle(
+                                            backgroundColor: MaterialStatePropertyAll<Color>(clr)
+                                        ),
+                                        onPressed: (){},
+                                        child: Icon(Icons.shopping_cart,size: 16,)),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
