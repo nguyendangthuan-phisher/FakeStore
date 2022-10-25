@@ -11,54 +11,108 @@ class ListViewerPage extends StatelessWidget {
   ButtonStyle styleButton = ButtonStyle(
       backgroundColor: MaterialStateProperty.all<Color>(Colors.grey)
   );
+  Column rateDraw(double rate,num count){
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            for(int i=0;i<rate.toInt();i++)
+              Icon(Icons.star,color: Colors.orange,size: 16,),
+          ],
+        ),
+        Row(
+          children: [
+            Text(rate.toString(),style: TextStyle(
+              color: Colors.black,
+              fontSize: 12
+            ),),
+            Icon(Icons.star,color: Colors.orange,size: 12,),
+            Text("  \("+ count.toString() + "\)",style: TextStyle(
+                color: Colors.black,
+                fontSize: 12
+            ),)
+          ],
+        )
+      ],
+    );
+  }
   @override
   Widget build(BuildContext context) {
     var pp = Provider.of<ProductProvider>(context);
     if (pp.list.isEmpty)
       pp.getList();
     return Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          backgroundColor: Colors.green,
-          title:
-          Row(
-            children: [
-              ElevatedButton(
-                  onPressed: (){
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => ListViewerPage()));
-                  },
-                  style: styleButton,
-                  child: Row(
-                    children: [
-                      Icon(Icons.list),
-                    ],
-                  )
-              ),
-              ElevatedButton(
-                  onPressed: (){
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => ProductListPage()));
-                  },
-                  style: styleButton,
-                  child: Row(
-                    children: [
-                      Icon(Icons.grid_on),
-                    ],
-                  )
-              ),
-              Text("JSON View"),
-              Text("")
-            ],
-          ),
-          titleTextStyle: TextStyle(color: Colors.white, fontSize: 20,fontWeight: FontWeight.bold),
-        ),
         body:
         ListView(
           scrollDirection: Axis.vertical,
           children: [
             ...pp.list.map((e) {
-              return Text(e.category??"");
+              return Padding(
+                padding: const EdgeInsets.only(left: 10,right: 10,top: 5,bottom: 5),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    border: Border.all(
+                      color: Colors.orange, //                   <--- border color
+                      width: 2.0,
+                    ),
+                  ),
+                  height: 100,
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10,right: 20),
+                        child: Container(
+                            width: 50,
+                            child: Image.network(e.image.toString())
+                        ),
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Container(
+                                width: 290,
+                                height: 48,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(top: 10,bottom: 4),
+                                  child: Text(e.title??" ",maxLines: 1,overflow: TextOverflow.ellipsis,style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold
+                                  ),),
+                                ),
+                              ),
+                              rateDraw(e.rate??0.toDouble(),e.count??0)
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Container(
+                                width: 290,
+                                child: Text(e.description??"",maxLines: 2,style: TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.grey
+                                ),),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 10),
+                                child: Text("\$ "+e.price.toString(),style: TextStyle(
+                                  color: Colors.red,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                ),),
+                              ),
+                            ],
+                          ),
+
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              );
             })
           ],
         ),

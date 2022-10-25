@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lophocphan/category.dart';
+import 'package:lophocphan/grid_view.dart';
 import 'package:lophocphan/list_view.dart';
 import 'package:lophocphan/provider/product_provider.dart';
 import 'package:provider/provider.dart';
@@ -13,6 +14,32 @@ class ProductListPage extends StatefulWidget {
 }
 
 class _ProductListPageState extends State<ProductListPage> {
+  Column rateDraw(double rate,num count){
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            for(int i=0;i<rate.toInt();i++)
+              Icon(Icons.star,color: Colors.orange,size: 16,),
+          ],
+        ),
+        Row(
+          children: [
+            Text(rate.toString(),style: TextStyle(
+                color: Colors.black,
+                fontSize: 12
+            ),),
+            Icon(Icons.star,color: Colors.orange,size: 12,),
+            Text("  \("+ count.toString() + "\)",style: TextStyle(
+                color: Colors.black,
+                fontSize: 12
+            ),)
+          ],
+        )
+      ],
+    );
+  }
   ButtonStyle styleButton = ButtonStyle(
       backgroundColor: MaterialStateProperty.all<Color>(Colors.white)
   );
@@ -148,75 +175,8 @@ class _ProductListPageState extends State<ProductListPage> {
             ),
             Category(),
             Expanded(
-              child: GridView.count(
-                crossAxisCount: 3,
-                mainAxisSpacing: 10,
-                crossAxisSpacing: 10,
-                scrollDirection: Axis.vertical,
-                children: [
-
-                  ...pp.list.map((e) {
-                    return Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(width: 2.0, color: Colors.orange),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          SizedBox(height: 10,),
-                          Container(
-                              height: 36,
-                              child: Image.network(e.image.toString())
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Container(
-                              height: 45,
-                              child: Text(e.title??"",style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14
-                              ),
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 3,
-                              ),
-                            ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Text( "\$ "+ (e.price.toString()),style: style,),
-                              Container(
-                                width: 50,
-                                child: ElevatedButton(
-                                    style: ButtonStyle(
-                                        backgroundColor: MaterialStatePropertyAll<Color>(clr)
-                                    ),
-                                    onPressed: (){},
-                                    child: Icon(Icons.shopping_cart,size: 16,)),
-                              ),
-                            ],
-                          ),
-                          // Container(
-                          //   height: 25,
-                          //   width: 80,
-                          //   child: ElevatedButton(
-                          //       style: ButtonStyle(
-                          //           backgroundColor: MaterialStatePropertyAll<Color>(clr)
-                          //       ),
-                          //       onPressed: (){},
-                          //       child: Text("Add")),
-                          // ),
-                          SizedBox(
-                            height: 10,
-                          )
-                        ],
-                      ),
-                    );
-                    // return Text(e.title??"");
-                  })
-                ],
-              ),
-            ),
+              child: pp.showGrid ? ListViewerPage() : GridViewPage(),
+            )
           ],
         )
     );

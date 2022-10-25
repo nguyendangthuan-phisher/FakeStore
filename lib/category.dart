@@ -18,15 +18,21 @@ class Category extends StatelessWidget {
         children: [
           ...pp.listCategory.map((e) {
             return Container(
-              padding: EdgeInsets.all(10),
-              margin: EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                  color: Colors.orange,
-                  borderRadius: BorderRadius.circular(5)
+              margin: EdgeInsets.only(right: 5,left: 5),
+              padding: EdgeInsets.only(top: 5,bottom: 5
               ),
-              child: Text(
-                e,style:
-              TextStyle(fontSize: 15,color: Colors.white),
+              child: ElevatedButton(
+                onPressed: (){},
+                style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: 20.0, vertical: 20.0),
+                  primary: Colors.orange,
+                  shape: StadiumBorder(),
+                ),
+                child: Text(
+                  e,style:
+                TextStyle(fontSize: 15,color: Colors.white),
+                ),
               ),
             );
           }).toList()
