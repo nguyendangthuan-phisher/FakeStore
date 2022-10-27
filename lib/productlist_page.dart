@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:lophocphan/cart_page.dart';
 import 'package:lophocphan/category.dart';
-import 'package:lophocphan/grid_view.dart';
-import 'package:lophocphan/list_view.dart';
+import 'package:lophocphan/product_detail.dart';
 import 'package:lophocphan/provider/product_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -22,6 +22,8 @@ class _ProductListPageState extends State<ProductListPage> {
           children: [
             for(int i=0;i<rate.toInt();i++)
               Icon(Icons.star,color: Colors.orange,size: 16,),
+            if(rate%1>0.5)
+              Icon(Icons.star_half,color: Colors.orange,size: 16,),
           ],
         ),
         Row(
@@ -31,6 +33,7 @@ class _ProductListPageState extends State<ProductListPage> {
                 fontSize: 12
             ),),
             Icon(Icons.star,color: Colors.orange,size: 12,),
+
             Text("  \("+ count.toString() + "\)",style: TextStyle(
                 color: Colors.black,
                 fontSize: 12
@@ -69,8 +72,8 @@ class _ProductListPageState extends State<ProductListPage> {
               Text("Fake Store API"),
               ElevatedButton(
                   onPressed: (){
-                    // Navigator.push(context,
-                    //     MaterialPageRoute(builder: (context) => ProductListPage()));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => CartPage()));
                   },
                   style: styleButton,
                   child: Container(
@@ -80,7 +83,7 @@ class _ProductListPageState extends State<ProductListPage> {
                           Icon(Icons.shopping_cart,color: clr,),
                           Column(
                             children: [
-                              Text(" \(" + "0" + "\)",style: TextStyle(
+                              Text(" \(" + (pp.listCart.length??0).toString() + "\)",style: TextStyle(
                                 color: Colors.orange,
                                 fontSize: 12,
                                 fontWeight: FontWeight.bold
@@ -189,7 +192,177 @@ class _ProductListPageState extends State<ProductListPage> {
             ),
             Category(),
             Expanded(
-              child: pp.showGrid ? ListViewerPage() : GridViewPage(),
+              child: !pp.showGrid
+                  ? ListView(
+                scrollDirection: Axis.vertical,
+                children: [
+                  ...pp.list.map((e) {
+                    return Padding(
+                      padding: const EdgeInsets.only(left: 10,right: 10,top: 5,bottom: 5),
+                      child: TextButton(
+                        onPressed: (){
+                          pp.detail=e;
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => ProductDetail()));
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            border: Border.all(
+                              color: Colors.orange, //                   <--- border color
+                              width: 2.0,
+                            ),
+                          ),
+                          height: 100,
+                          child: Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left: 10,right: 20),
+                                child: Container(
+                                    width: 50,
+                                    child: Image.network(e.image.toString())
+                                ),
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Container(
+                                        width: 260,
+                                        height: 48,
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(top: 10,bottom: 4),
+                                          child: Text(e.title??" ",maxLines: 1,overflow: TextOverflow.ellipsis,style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
+                                            color: Colors.black
+                                          ),),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(left: 20),
+                                        child: rateDraw(e.rate??0.toDouble(),e.rateCount??0),
+                                      )
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      Container(
+                                        width: 250,
+                                        child: Text(e.description??"",maxLines: 2,style: TextStyle(
+                                            fontSize: 12,
+                                            color: Colors.grey
+                                        ),),
+                                      ),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(left: 10,right: 10),
+                                            child: Text( "\$ "+ (e.price.toString()),style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.red
+                                            ),),
+                                          ),
+                                          Container(
+                                            width: 50,
+                                            child: ElevatedButton(
+                                                style: ButtonStyle(
+                                                    backgroundColor: MaterialStatePropertyAll<Color>(clr)
+                                                ),
+                                                onPressed: (){
+                                                  setState(() {
+                                                    pp.addToCart(e.id, e.title, e.price, e.description, e.category, e.image, e.rate, e.rateCount);
+                                                  });
+                                                },
+                                                child: Icon(Icons.shopping_cart,size: 16,)),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  })
+                ],
+              )
+                  : GridView.count(
+                crossAxisCount: 3,
+                mainAxisSpacing: 10,
+                crossAxisSpacing: 10,
+                scrollDirection: Axis.vertical,
+                children: [
+
+                  ...pp.list.map((e) {
+                    return Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(width: 2.0, color: Colors.orange),
+                      ),
+                      child: TextButton(
+                        onPressed: (){
+                          pp.detail=e;
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => ProductDetail()));
+                        },
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            SizedBox(height: 10,),
+                            Container(
+                                height: 36,
+                                child: Image.network(e.image.toString())
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Container(
+                                height: 45,
+                                child: Text(e.title??"",style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
+                                  color: Colors.black
+                                ),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 3,
+                                ),
+                              ),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Text( "\$ "+ (e.price.toString()),style: style,),
+                                Container(
+                                  width: 50,
+                                  child: ElevatedButton(
+                                      style: ButtonStyle(
+                                          backgroundColor: MaterialStatePropertyAll<Color>(clr)
+                                      ),
+                                      onPressed: (){
+                                        setState(() {
+                                          pp.addToCart(e.id, e.title, e.price, e.description, e.category, e.image, e.rate, e.rateCount);
+                                        });
+                                      },
+                                      child: Icon(Icons.shopping_cart,size: 16,)),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 10,
+                            )
+                          ],
+                        ),
+                      ),
+                    );
+                    // return Text(e.title??"");
+                  })
+                ],
+              ),
             )
           ],
         )

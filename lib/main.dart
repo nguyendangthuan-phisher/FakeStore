@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:lophocphan/list_view.dart';
+import 'package:lophocphan/cart_page.dart';
+import 'package:lophocphan/done_pay.dart';
+import 'package:lophocphan/pay_page.dart';
 import 'package:lophocphan/product_detail.dart';
 import 'package:lophocphan/productlist_page.dart';
 import 'package:lophocphan/provider/product_provider.dart';

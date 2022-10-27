@@ -1,24 +1,24 @@
 class ProductModel {
-  num? id;
+  int id=1;
   String? title;
-  num? price;
+  double price=0.0;
   String? description;
   String? category;
   String? image;
   double? rate;
-  num? rateCount;
-  num? count;
+  int rateCount=0;
+  int count=1;
 
   ProductModel({
-    this.id,
+    this.id=1,
     this.title,
     this.category,
     this.description,
     this.image,
-    this.price,
+    this.price=0.0,
     this.rate,
-    this.rateCount,
-    this.count
+    this.rateCount=0,
+    this.count=1,
   });
 
   factory ProductModel.fromJson(Map<String, dynamic> json){
@@ -33,6 +33,14 @@ class ProductModel {
       rateCount: json['rating']['count'],
     );
   }
-
+  void addOne() async {
+    this.count=this.count+1;
+  }
+  void minusOne(List<ProductModel> listCart) async {
+    if(this.count==1)
+      listCart.remove(this);
+    else
+      this.count=this.count-1;
+  }
 
 }

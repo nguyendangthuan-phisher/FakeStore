@@ -22,7 +22,9 @@ class Category extends StatelessWidget {
               padding: EdgeInsets.only(top: 5,bottom: 5
               ),
               child: ElevatedButton(
-                onPressed: (){},
+                onPressed: (){
+
+                },
                 style: ElevatedButton.styleFrom(
                   padding: EdgeInsets.symmetric(
                       horizontal: 20.0, vertical: 20.0),
