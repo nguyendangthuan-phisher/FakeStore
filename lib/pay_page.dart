@@ -65,16 +65,20 @@ class PayPage extends StatelessWidget {
                   style: styleButton,
                   child: Container(
                       height: 36,
+                      width: 42,
                       child: Row(
                         children: [
                           Icon(Icons.shopping_cart,color: clr,),
                           Column(
                             children: [
-                              Text(" \(" + (pp.listCart.length??0).toString() + "\)",style: TextStyle(
-                                  color: Colors.orange,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold
-                              ),),
+                              Container(
+                                width: 250,
+                                child: Text(" \(" + (pp.listCart.length??0).toString() + "\)",maxLines: 1,overflow: TextOverflow.clip,style: TextStyle(
+                                    color: Colors.orange,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold
+                                ),),
+                              ),
                             ],
                           )
                         ],

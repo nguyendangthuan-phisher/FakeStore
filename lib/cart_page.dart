@@ -299,11 +299,14 @@ class _CartPageState extends State<CartPage> {
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.only(left: 10,right: 10),
-                                      child: Text( "\$ "+ ((e.price*e.count).toString()),style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.red,
-                                          fontSize: 18
-                                      ),),
+                                      child: Container(
+                                        width: 106,
+                                        child: Text( "\$ "+ ((e.price*e.count).toString()),maxLines: 1,overflow: TextOverflow.clip,style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.red,
+                                            fontSize: 18
+                                        ),),
+                                      ),
                                     ),
                                   ],
                                 ),

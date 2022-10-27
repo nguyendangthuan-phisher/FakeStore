@@ -6,8 +6,10 @@ import 'package:http/http.dart' as http;
 
 class ProductProvider extends ChangeNotifier{
   List<ProductModel> list = [];
+  List<ProductModel> listTemp = [];
   List<ProductModel> listCart = [];
   List<String> listCategory = [];
+  List<ProductModel> listCategorySelected = [];
   ProductModel detail = new ProductModel();
   bool showGrid = true;
   void show(bool isGrid){
@@ -61,6 +63,13 @@ class ProductProvider extends ChangeNotifier{
       }
       return ans;
   }
-
+  void selectedCategory(String categ)
+  {
+    for(int i=0;i<list.length;i++)
+      {
+        if(list[i].category==categ)
+          listCategorySelected.add(list[i]);
+      }
+  }
 
 }

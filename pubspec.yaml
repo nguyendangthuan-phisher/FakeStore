@@ -33,6 +33,7 @@ dependencies:
   provider:
   flutter:
     sdk: flutter
+  intl: ^0.16.1
 
 
 

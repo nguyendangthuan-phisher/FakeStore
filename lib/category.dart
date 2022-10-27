@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:lophocphan/provider/product_provider.dart';
 import 'package:provider/provider.dart';
 
-class Category extends StatelessWidget {
-  Category({Key? key}) : super(key: key);
-  List<String> hashList = [
-    'Men\'s Clothing', 'Jewelery', 'Electronics', 'Sweater', 'Jacket', 'Hat',
-  ];
+class Category extends StatefulWidget {
+  const Category({Key? key}) : super(key: key);
+
+  @override
+  State<Category> createState() => _CategoryState();
+}
+
+class _CategoryState extends State<Category> {
   @override
   Widget build(BuildContext context) {
     var pp = Provider.of<ProductProvider>(context);
@@ -23,7 +26,10 @@ class Category extends StatelessWidget {
               ),
               child: ElevatedButton(
                 onPressed: (){
-
+                  setState(() {
+                    // pp.selectedCategory(e);
+                    // pp.list=pp.listCategorySelected;
+                  });
                 },
                 style: ElevatedButton.styleFrom(
                   padding: EdgeInsets.symmetric(
@@ -43,3 +49,5 @@ class Category extends StatelessWidget {
     );
   }
 }
+
+
