@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:html';
 
 import 'package:flutter/material.dart';
 import 'package:lophocphan/model/product_model.dart';
@@ -25,6 +26,9 @@ class ProductProvider extends ChangeNotifier{
     var jsonString = rs.body;
     var jsonObject = jsonDecode(jsonString) as List;
     list = jsonObject.map((e) {
+      return ProductModel.fromJson(e);
+    }).toList();
+    listTemp = jsonObject.map((e) {
       return ProductModel.fromJson(e);
     }).toList();
     notifyListeners();
@@ -64,14 +68,6 @@ class ProductProvider extends ChangeNotifier{
       }
       return ans;
   }
-  void selectedCategory(String categ)
-  {
-    for(int i=0;i<list.length;i++)
-      {
-        if(list[i].category==categ)
-          listCategorySelected.add(list[i]);
-      }
-  }
   void checkProduct(String c) async {
     this.category=c;
     for(int i=0;i<list.length;i++){
@@ -80,6 +76,16 @@ class ProductProvider extends ChangeNotifier{
         i--;
       }
     }
+  }
+
+  List<ProductModel> selectedCategory(String category)
+  {
+    List<ProductModel> l = [];
+    for(int i=0;i<listTemp.length;i++){
+      if(listTemp[i].category==category)
+        l.add(list[i]);
+    }
+    return l;
   }
 
 }

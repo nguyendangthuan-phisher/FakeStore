@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lophocphan/productlist_page.dart';
 import 'package:lophocphan/provider/product_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -19,6 +20,30 @@ class _CategoryState extends State<Category> {
       scrollDirection: Axis.horizontal,
       child: Row(
         children: [
+          Container(
+            margin: EdgeInsets.only(right: 5,left: 5),
+            padding: EdgeInsets.only(top: 5,bottom: 5
+            ),
+            child: ElevatedButton(
+              onPressed: (){
+                setState(() {
+                  pp.list = pp.listTemp;
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => ProductListPage()));
+                });
+              },
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.symmetric(
+                    horizontal: 20.0, vertical: 20.0),
+                primary: Colors.orange,
+                shape: StadiumBorder(),
+              ),
+              child: Text(
+                "ALL",style:
+              TextStyle(fontSize: 15,color: Colors.white,fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
           ...pp.listCategory.map((e) {
             return Container(
               margin: EdgeInsets.only(right: 5,left: 5),
@@ -27,8 +52,10 @@ class _CategoryState extends State<Category> {
               child: ElevatedButton(
                 onPressed: (){
                   setState(() {
-                    // pp.category=e.toString();
-                    // pp.checkProduct(e.toString());
+                    pp.list = pp.listTemp;
+                    pp.list = pp.selectedCategory(e);
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => ProductListPage()));
                   });
                 },
                 style: ElevatedButton.styleFrom(
