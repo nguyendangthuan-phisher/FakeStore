@@ -9,6 +9,7 @@ class ProductProvider extends ChangeNotifier{
   List<ProductModel> listTemp = [];
   List<ProductModel> listCart = [];
   List<String> listCategory = [];
+  String category = "none";
   List<ProductModel> listCategorySelected = [];
   ProductModel detail = new ProductModel();
   bool showGrid = true;
@@ -70,6 +71,15 @@ class ProductProvider extends ChangeNotifier{
         if(list[i].category==categ)
           listCategorySelected.add(list[i]);
       }
+  }
+  void checkProduct(String c) async {
+    this.category=c;
+    for(int i=0;i<list.length;i++){
+      if(list[i].category!= category){
+        list.removeAt(i);
+        i--;
+      }
+    }
   }
 
 }

@@ -27,8 +27,8 @@ class _CategoryState extends State<Category> {
               child: ElevatedButton(
                 onPressed: (){
                   setState(() {
-                    // pp.selectedCategory(e);
-                    // pp.list=pp.listCategorySelected;
+                    // pp.category=e.toString();
+                    // pp.checkProduct(e.toString());
                   });
                 },
                 style: ElevatedButton.styleFrom(
